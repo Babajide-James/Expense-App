@@ -12,24 +12,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<Transaction> transaction = [
-    Transaction(
-      id: 't1',
-      amount: 200,
-      date: DateTime.now(),
-      item: 'Expensive Shoes',
-    ),
-    Transaction(
-      id: 't2',
-      amount: 555,
-      date: DateTime.now(),
-      item: 'Mac Book m2',
-    ),
-    Transaction(
-      id: 't3',
-      amount: 5000,
-      date: DateTime.now(),
-      item: 'Expensive House',
-    ),
+    // Transaction(id: 'Add`', amount: 22, date: DateTime.now(), item: 'Djnjdnd'),
   ];
   List<Transaction> get recentTransaction {
     return transaction.where((tx) {
@@ -48,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       transaction.add(userAdd);
     });
+    Navigator.of(context).pop();
   }
 
   void addNewTransactionButton(BuildContext contxt) {
@@ -61,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // print(amount);
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
@@ -69,16 +54,15 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () => addNewTransactionButton(context),
           ),
         ],
-        title: Text('Purchase Record App'),
-        foregroundColor: Theme.of(context).primaryColorDark,
+        title: Text('My Expense App'),
+        foregroundColor: Theme.of(context).shadowColor,
         backgroundColor: Theme.of(context).primaryColor,
-        centerTitle: true,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Chart(recentTransaction),
+          Expanded(child: Chart(recentTransaction)),
           HomePage(transaction: transaction),
         ],
       ),

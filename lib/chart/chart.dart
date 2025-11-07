@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import '../models/model.dart';
 import 'package:intl/intl.dart';
+import 'chart_box.dart';
 
 class Chart extends StatelessWidget {
   const Chart(this.recentTransaction, {super.key});
   final List<Transaction> recentTransaction;
 
-  List<Map<String, Object>> get chartTableList {
+  List<Map<String, Object>> get myTransactions {
     return List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(Duration(days: index));
       var totalSum = 0.00;
@@ -17,17 +18,36 @@ class Chart extends StatelessWidget {
           totalSum += recentTransaction[i].amount;
         }
       }
+      return {
+        'day': DateFormat.E().format(weekDay).substring(0, 2),
+        'amount': totalSum.toStringAsFixed(1),
+      };
+    });
+  }
 
-      return {'day': DateFormat.E().format(weekDay), 'amount': totalSum};
+  double get totalExpense {
+    return myTransactions.fold(0.0, (x, y) {
+      return x + double.parse(y['amount'] as String);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // print(totalExpense);
     return Card(
       elevation: 5,
-      margin: EdgeInsets.all(20),
-      child: Row(children: <Widget>[]),
+      margin: EdgeInsets.all(10),
+      child: Row(
+        children: myTransactions.map((data) {
+          return ChartBox(
+            label: data['day'] as String,
+            totalAmount: double.parse(data['amount'] as String),
+            percentOfTotal: totalExpense == 0.00
+                ? 0.00
+                : double.parse(data['amount'] as String) / totalExpense,
+          );
+        }).toList(),
+      ),
     );
   }
 }

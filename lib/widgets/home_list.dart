@@ -14,17 +14,24 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: 570,
       child: widget.transaction.isEmpty
           ? Column(
               children: [
-                Text('Purchase and Expenses List is Empty!'),
-                SizedBox(
-                  height: 200,
-                  child: Image.asset(
-                    'assets/image/waiting.png',
-                    fit: BoxFit.cover,
+                Text(
+                  'Purchase and Expense Lists are Empty!',
+                  style: TextStyle(
+                    fontSize: 24,
+
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.bold,
                   ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+                SizedBox(
+                  height: 250,
+                  child: Image.asset('assets/image/ajs.jpg', fit: BoxFit.fill),
                 ),
               ],
             )
@@ -33,14 +40,13 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (ctx, index) {
                 return Card(
                   child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
                         margin: EdgeInsets.only(
-                          right: 20,
-                          left: 20,
-                          top: 10,
-                          bottom: 10,
+                          right: 10,
+                          left: 10,
+                          // top: 10,
+                          // bottom: 10,
                         ),
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
@@ -65,7 +71,10 @@ class _HomePageState extends State<HomePage> {
                             DateFormat(
                               'd MMM. y',
                             ).format(widget.transaction[index].date),
-                            style: TextStyle(color: Colors.grey, fontSize: 16),
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 16,
+                            ),
                           ),
                         ],
                       ),

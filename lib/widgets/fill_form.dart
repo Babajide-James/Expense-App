@@ -16,8 +16,8 @@ class _FillFormState extends State<FillForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(5),
-      padding: EdgeInsets.all(5),
+      margin: EdgeInsets.all(10),
+      padding: EdgeInsets.all(10),
       child: Column(
         children: [
           TextField(
@@ -42,6 +42,7 @@ class _FillFormState extends State<FillForm> {
               // ),
             ),
           ),
+          SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -58,7 +59,7 @@ class _FillFormState extends State<FillForm> {
                 child: Text(
                   'Add Transaction',
                   style: TextStyle(
-                    color: Colors.lightBlueAccent,
+                    color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
