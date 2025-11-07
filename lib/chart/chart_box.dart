@@ -13,42 +13,40 @@ class ChartBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Card(
-        child: Column(
-          children: [
-            Text('\$${totalAmount.toStringAsFixed(0)}'),
-            SizedBox(height: 10),
-            SizedBox(
-              height: 150,
-              width: 20,
-              child: Stack(
-                children: [
-                  Container(
+      child: Column(
+        children: [
+          FittedBox(child: Text('\$${totalAmount.toStringAsFixed(0)}')),
+          SizedBox(height: 10),
+          SizedBox(
+            height: 100,
+            width: 15,
+            child: Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadiusGeometry.circular(10),
+                    border: BoxBorder.all(
+                      width: 3,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                ),
+                FractionallySizedBox(
+                  heightFactor: percentOfTotal,
+                  child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadiusGeometry.circular(10),
-                      border: BoxBorder.all(
-                        width: 3,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      color: Colors.purple,
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  FractionallySizedBox(
-                    heightFactor: percentOfTotal,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColorLight,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            SizedBox(height: 10),
-            Text(label),
-          ],
-        ),
+          ),
+          SizedBox(height: 10),
+          Text(label),
+        ],
       ),
     );
   }

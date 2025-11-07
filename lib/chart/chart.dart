@@ -35,16 +35,15 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     // print(totalExpense);
     return Card(
-      elevation: 5,
+      elevation: 2,
       margin: EdgeInsets.all(10),
       child: Row(
         children: myTransactions.map((data) {
           return ChartBox(
             label: data['day'] as String,
             totalAmount: double.parse(data['amount'] as String),
-            percentOfTotal: totalExpense == 0.00
-                ? 0.00
-                : double.parse(data['amount'] as String) / totalExpense,
+            percentOfTotal:
+                double.parse(data['amount'] as String) / totalExpense,
           );
         }).toList(),
       ),

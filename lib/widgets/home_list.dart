@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 570,
+      height: MediaQuery.of(context).size.height * 0.66,
       child: widget.transaction.isEmpty
           ? Column(
               children: [
@@ -31,7 +31,10 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: 20),
                 SizedBox(
                   height: 250,
-                  child: Image.asset('assets/image/ajs.jpg', fit: BoxFit.fill),
+                  child: Image.asset(
+                    'assets/image/waiting.png',
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ],
             )
@@ -39,46 +42,26 @@ class _HomePageState extends State<HomePage> {
               itemCount: widget.transaction.length,
               itemBuilder: (ctx, index) {
                 return Card(
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(
-                          right: 10,
-                          left: 10,
-                          // top: 10,
-                          // bottom: 10,
-                        ),
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          border: BoxBorder.all(width: 2),
-                        ),
-                        child: Text(
-                          '\$${widget.transaction[index].amount}'.toString(),
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 24,
+                      child: FittedBox(
+                        child: Text('\$${widget.transaction[index].amount}'),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.transaction[index].item,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                          ),
-                          Text(
-                            DateFormat(
-                              'd MMM. y',
-                            ).format(widget.transaction[index].date),
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
+                    ),
+                    title: Text(
+                      widget.transaction[index].item,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontFamily: 'OpenSans',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
                       ),
-                    ],
+                    ),
+                    subtitle: Text(
+                      DateFormat.yMMMd().format(widget.transaction[index].date),
+                    ),
+                    trailing: Icon(Icons.delete_forever),
                   ),
                 );
               },
