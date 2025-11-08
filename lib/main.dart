@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
             fontSize: 25,
           ),
         ),
+        buttonTheme: ButtonThemeData(buttonColor: Colors.white),
         fontFamily: 'OpenSans',
 
         useMaterial3: true,

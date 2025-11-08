@@ -20,11 +20,11 @@ class _HomeScreenState extends State<HomeScreen> {
     }).toList();
   }
 
-  void userAddList(String txTitle, double txAmount) {
+  void userAddList(String txTitle, double txAmount, DateTime selectedDate) {
     final userAdd = Transaction(
       amount: txAmount,
-      date: DateTime.now(),
-      id: DateTime.now().toString(),
+      date: selectedDate,
+      id: selectedDate.toString(),
       item: txTitle,
     );
 
@@ -34,9 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.of(context).pop();
   }
 
-  void addNewTransactionButton(BuildContext contxt) {
+  void addNewTransactionButton(BuildContext context) {
     showModalBottomSheet(
-      context: contxt,
+      context: context,
       builder: (_) {
         return FillForm(userAddList);
       },
@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(child: Chart(recentTransaction)),
-          HomePage(transaction: transaction),
+          HomeList(transaction: transaction),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

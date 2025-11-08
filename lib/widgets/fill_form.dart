@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class FillForm extends StatefulWidget {
   const FillForm(this.addTrnx, {super.key});
@@ -6,12 +7,42 @@ class FillForm extends StatefulWidget {
   final Function addTrnx;
 
   @override
-  State<FillForm> createState() => _FillFormState();
+  State<FillForm> createState() => FillFormState();
 }
 
-class _FillFormState extends State<FillForm> {
+class FillFormState extends State<FillForm> {
+  DateTime? _selectedDate;
   final titleController = TextEditingController();
   final amountController = TextEditingController();
+
+  void fillForms() {
+    if ((double.parse(amountController.text)) <= 0 ||
+        titleController.text.isEmpty ||
+        _selectedDate == null) {
+      return;
+    }
+    widget.addTrnx(
+      titleController.text,
+      double.parse(amountController.text),
+      _selectedDate,
+    );
+  }
+
+  void _datePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate == null) {
+        return null;
+      }
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,24 +75,59 @@ class _FillFormState extends State<FillForm> {
           ),
           SizedBox(height: 10),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                _selectedDate == null
+                    ? 'No Date Selected'
+                    : 'picked Date:'
+                          ' '
+                          '${DateFormat.yMd().format(_selectedDate!)}',
+                style: TextStyle(
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+
+              TextButton(
+                onPressed: _datePicker,
+                child: Text(
+                  'Choose Date',
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    decorationThickness: 3,
+                    decorationColor: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+
+          Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              TextButton(
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                ),
                 onPressed: () {
                   (widget.addTrnx(
                     titleController.text,
                     double.parse(amountController.text),
+                    _selectedDate,
                   ));
                   titleController.clear();
                   amountController.clear();
                 },
-
                 child: Text(
                   'Add Transaction',
                   style: TextStyle(
-                    color: Theme.of(context).primaryColor,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 15,
                   ),
                 ),
               ),

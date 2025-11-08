@@ -20,7 +20,7 @@ class Chart extends StatelessWidget {
       }
       return {
         'day': DateFormat.E().format(weekDay).substring(0, 2),
-        'amount': totalSum.toStringAsFixed(1),
+        'amount': totalSum.toStringAsFixed(0),
       };
     });
   }
@@ -35,6 +35,7 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     // print(totalExpense);
     return Card(
+      // myTransaction == ChartBox ?
       elevation: 2,
       margin: EdgeInsets.all(10),
       child: Row(
@@ -42,8 +43,9 @@ class Chart extends StatelessWidget {
           return ChartBox(
             label: data['day'] as String,
             totalAmount: double.parse(data['amount'] as String),
-            percentOfTotal:
-                double.parse(data['amount'] as String) / totalExpense,
+            percentOfTotal: totalExpense == 0
+                ? 0.00
+                : double.parse(data['amount'] as String) / totalExpense,
           );
         }).toList(),
       ),

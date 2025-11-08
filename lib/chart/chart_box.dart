@@ -14,8 +14,14 @@ class ChartBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Column(
+        // mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          FittedBox(child: Text('\$${totalAmount.toStringAsFixed(0)}')),
+          SizedBox(
+            height: 25,
+            child: FittedBox(
+              child: Text('\$${totalAmount.toStringAsFixed(0)}'),
+            ),
+          ),
           SizedBox(height: 10),
           SizedBox(
             height: 100,
@@ -28,6 +34,16 @@ class ChartBox extends StatelessWidget {
                     border: BoxBorder.all(
                       width: 3,
                       color: Theme.of(context).primaryColor,
+                    ),
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadiusGeometry.circular(10),
+                    border: BoxBorder.all(
+                      width: 3,
+                      color: Theme.of(context).primaryColorDark,
                     ),
                     color: Theme.of(context).primaryColorLight,
                   ),

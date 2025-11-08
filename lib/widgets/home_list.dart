@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:for_expense/models/model.dart';
 import 'package:intl/intl.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.transaction});
+class HomeList extends StatefulWidget {
+  const HomeList({super.key, required this.transaction});
 
   final List<Transaction> transaction;
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeList> createState() => _HomeListState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeListState extends State<HomeList> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -22,7 +22,6 @@ class _HomePageState extends State<HomePage> {
                   'Purchase and Expense Lists are Empty!',
                   style: TextStyle(
                     fontSize: 24,
-
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold,
                   ),
@@ -59,7 +58,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     subtitle: Text(
-                      DateFormat.yMMMd().format(widget.transaction[index].date),
+                      DateFormat.yMMMEd().format(
+                        widget.transaction[index].date,
+                      ),
                     ),
                     trailing: Icon(Icons.delete_forever),
                   ),
