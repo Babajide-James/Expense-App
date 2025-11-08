@@ -16,16 +16,12 @@ class FillFormState extends State<FillForm> {
   final amountController = TextEditingController();
 
   void fillForms() {
-    if ((double.parse(amountController.text)) <= 0 ||
-        titleController.text.isEmpty ||
-        _selectedDate == null) {
+    String input = titleController.text.trim();
+    double amount = double.tryParse(amountController.text) ?? 0;
+    if (input.isEmpty || amount <= 0 || _selectedDate == null) {
       return;
     }
-    widget.addTrnx(
-      titleController.text,
-      double.parse(amountController.text),
-      _selectedDate,
-    );
+    widget.addTrnx(input, amount, _selectedDate);
   }
 
   void _datePicker() {
@@ -36,7 +32,7 @@ class FillFormState extends State<FillForm> {
       lastDate: DateTime.now(),
     ).then((pickedDate) {
       if (pickedDate == null) {
-        return null;
+        return;
       }
       setState(() {
         _selectedDate = pickedDate;
@@ -79,7 +75,7 @@ class FillFormState extends State<FillForm> {
             children: [
               Text(
                 _selectedDate == null
-                    ? 'No Date Selected'
+                    ? 'No Date Selected!'
                     : 'picked Date:'
                           ' '
                           '${DateFormat.yMd().format(_selectedDate!)}',
@@ -113,15 +109,7 @@ class FillFormState extends State<FillForm> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
                 ),
-                onPressed: () {
-                  (widget.addTrnx(
-                    titleController.text,
-                    double.parse(amountController.text),
-                    _selectedDate,
-                  ));
-                  titleController.clear();
-                  amountController.clear();
-                },
+                onPressed: fillForms,
                 child: Text(
                   'Add Transaction',
                   style: TextStyle(

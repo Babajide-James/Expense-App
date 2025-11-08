@@ -14,10 +14,19 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Transaction> transaction = [
     // Transaction(id: 'Add`', amount: 22, date: DateTime.now(), item: 'Djnjdnd'),
   ];
+
   List<Transaction> get recentTransaction {
     return transaction.where((tx) {
       return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
     }).toList();
+  }
+
+  removeTransaction(String id) {
+    setState(() {
+      return transaction.removeWhere((tx) {
+        return tx.id == id;
+      });
+    });
   }
 
   void userAddList(String txTitle, double txAmount, DateTime selectedDate) {
@@ -34,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.of(context).pop();
   }
 
-  void addNewTransactionButton(BuildContext context) {
+  addNewTransactionButton(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (_) {
@@ -63,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(child: Chart(recentTransaction)),
-          HomeList(transaction: transaction),
+          HomeList(transaction: transaction, deleteCard: removeTransaction),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

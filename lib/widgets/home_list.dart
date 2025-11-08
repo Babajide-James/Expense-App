@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:for_expense/models/model.dart';
 import 'package:intl/intl.dart';
+// import './home_screen.dart';
 
 class HomeList extends StatefulWidget {
-  const HomeList({super.key, required this.transaction});
+  const HomeList({
+    super.key,
+    required this.deleteCard,
+    required this.transaction,
+  });
 
+  final Function deleteCard;
   final List<Transaction> transaction;
   @override
   State<HomeList> createState() => _HomeListState();
 }
 
 class _HomeListState extends State<HomeList> {
+  // _HomeListState({required this.deleteCard});
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -62,7 +70,11 @@ class _HomeListState extends State<HomeList> {
                         widget.transaction[index].date,
                       ),
                     ),
-                    trailing: Icon(Icons.delete_forever),
+                    trailing: TextButton(
+                      onPressed: () =>
+                          widget.deleteCard(widget.transaction[index].id),
+                      child: Icon(Icons.delete, color: Colors.red),
+                    ),
                   ),
                 );
               },
