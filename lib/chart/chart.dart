@@ -33,11 +33,9 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print(totalExpense);
     return Card(
-      // myTransaction == ChartBox ?
-      elevation: 2,
-      margin: EdgeInsets.all(10),
+      elevation: 4,
+      margin: EdgeInsets.all(15),
       child: Row(
         children: myTransactions.map((data) {
           return ChartBox(

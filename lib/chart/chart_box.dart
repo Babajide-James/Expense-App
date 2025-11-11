@@ -14,10 +14,9 @@ class ChartBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           SizedBox(
-            height: 25,
+            height: 22,
             child: FittedBox(
               child: Text('\$${totalAmount.toStringAsFixed(0)}'),
             ),

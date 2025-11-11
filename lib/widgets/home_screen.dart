@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Transaction> get recentTransaction {
     return transaction.where((tx) {
-      return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+      return tx.date.isAfter(DateTime.now().subtract(Duration(days: 8)));
     }).toList();
   }
 
@@ -54,25 +54,41 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => addNewTransactionButton(context),
+        ),
+      ],
+      title: Text('My Expense App'),
+      foregroundColor: Theme.of(context).shadowColor,
+      backgroundColor: Theme.of(context).primaryColor,
+    );
     // print(amount);
     return Scaffold(
-      appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => addNewTransactionButton(context),
-          ),
-        ],
-        title: Text('My Expense App'),
-        foregroundColor: Theme.of(context).shadowColor,
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
+      appBar: appBar,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(child: Chart(recentTransaction)),
-          HomeList(transaction: transaction, deleteCard: removeTransaction),
+          SizedBox(
+            height:
+                (MediaQuery.of(context).size.height * 0.33 -
+                appBar.preferredSize.height -
+                MediaQuery.of(context).padding.top),
+            child: Chart(recentTransaction),
+          ),
+          SizedBox(
+            height:
+                (MediaQuery.of(context).size.height * 0.67 -
+                appBar.preferredSize.height -
+                MediaQuery.of(context).padding.top),
+            child: HomeList(
+              transaction: transaction,
+              deleteCard: removeTransaction,
+            ),
+          ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

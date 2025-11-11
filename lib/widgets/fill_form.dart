@@ -10,12 +10,16 @@ class FillForm extends StatefulWidget {
   State<FillForm> createState() => FillFormState();
 }
 
+DateTime? _selectedDate;
+
 class FillFormState extends State<FillForm> {
-  DateTime? _selectedDate;
   final titleController = TextEditingController();
   final amountController = TextEditingController();
 
   void fillForms() {
+    if (titleController.text.isEmpty) {
+      return;
+    }
     String input = titleController.text.trim();
     double amount = double.tryParse(amountController.text) ?? 0;
     if (input.isEmpty || amount <= 0 || _selectedDate == null) {
@@ -27,7 +31,7 @@ class FillFormState extends State<FillForm> {
   void _datePicker() {
     showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: _selectedDate,
       firstDate: DateTime(2020),
       lastDate: DateTime.now(),
     ).then((pickedDate) {
