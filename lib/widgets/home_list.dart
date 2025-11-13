@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:for_expense/models/model.dart';
 import 'package:intl/intl.dart';
+import '../models/model.dart';
 // import './home_screen.dart';
 
 class HomeList extends StatefulWidget {
@@ -22,26 +22,31 @@ class _HomeListState extends State<HomeList> {
   @override
   Widget build(BuildContext context) {
     return widget.transaction.isEmpty
-        ? Column(
-            children: [
-              Text(
-                'Purchase and Expense Lists are Empty!',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 20),
-              SizedBox(
-                height: 250,
-                child: Image.asset(
-                  'assets/image/waiting.png',
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ],
+        ? LayoutBuilder(
+            builder: (contxt, constraint) {
+              return Column(
+                children: [
+                  SizedBox(height: constraint.maxHeight * 0.03),
+                  Text(
+                    'Expense List is Empty!',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: constraint.maxHeight * 0.03),
+                  SizedBox(
+                    height: constraint.maxHeight * 0.8,
+                    child: Image.asset(
+                      'assets/image/waiting.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              );
+            },
           )
         : ListView.builder(
             itemCount: widget.transaction.length,
@@ -66,11 +71,23 @@ class _HomeListState extends State<HomeList> {
                   subtitle: Text(
                     DateFormat.yMMMEd().format(widget.transaction[index].date),
                   ),
-                  trailing: TextButton(
-                    onPressed: () =>
-                        widget.deleteCard(widget.transaction[index].id),
-                    child: Icon(Icons.delete, color: Colors.red),
-                  ),
+                  trailing: MediaQuery.of(context).size.width > 460
+                      ? TextButton.icon(
+                          onPressed: widget.deleteCard(
+                            widget.transaction[index].id,
+                            Icon(Icons.delete, color: Colors.red),
+                          ),
+
+                          label: Text(
+                            'Delete',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        )
+                      : TextButton(
+                          onPressed: () =>
+                              widget.deleteCard(widget.transaction[index].id),
+                          child: Icon(Icons.delete, color: Colors.red),
+                        ),
                 ),
               );
             },

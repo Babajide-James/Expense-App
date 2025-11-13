@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import './widgets/home_screen.dart';
+// import 'package:flutter/services.dart';
 // import './home.dart';
 // import 'package:for_expense/widgets/fill_form.dart';
 
 void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown,
+  // ]);
   runApp(MyApp());
 }
 

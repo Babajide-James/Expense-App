@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/model.dart';
 import 'package:intl/intl.dart';
+import '../models/model.dart';
 import 'chart_box.dart';
 
 class Chart extends StatelessWidget {
@@ -35,7 +35,6 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
-      margin: EdgeInsets.all(15),
       child: Row(
         children: myTransactions.map((data) {
           return ChartBox(
